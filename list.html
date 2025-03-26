@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .container {
+            flex: 1;
+        }
+        footer {
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Trang chủ</a>
+        </div>
+    </nav>
+    
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">Danh sách nhà ở và văn phòng</h2>
+        
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <input type="text" id="searchBox" class="form-control" placeholder="Tìm kiếm theo tên...">
+            </div>
+            <div class="col-md-6">
+                <select id="filterPrice" class="form-control">
+                    <option value="">Lọc theo giá</option>
+                    <option value="10">Dưới 10 triệu</option>
+                    <option value="20">10 - 20 triệu</option>
+                    <option value="30">Trên 20 triệu</option>
+                </select>
+            </div>
+        </div>
+        
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Tên</th>
+                    <th>Địa chỉ</th>
+                    <th>Giá thuê</th>
+                    <th>Liên hệ</th>
+                </tr>
+            </thead>
+            <tbody id="propertyList">
+                <tr data-price="15">
+                    <td>1</td>
+                    <td>Căn hộ cao cấp Quận 1</td>
+                    <td>123 Đường A, Quận 1</td>
+                    <td>15 triệu/tháng</td>
+                    <td><a href="contact.html" class="btn btn-primary">Liên hệ</a></td>
+                </tr>
+                <tr data-price="20">
+                    <td>2</td>
+                    <td>Nhà phố nguyên căn Quận 7</td>
+                    <td>456 Đường B, Quận 7</td>
+                    <td>20 triệu/tháng</td>
+                    <td><a href="contact.html" class="btn btn-primary">Liên hệ</a></td>
+                </tr>
+                <tr data-price="30">
+                    <td>3</td>
+                    <td>Văn phòng hạng A Quận 3</td>
+                    <td>789 Đường C, Quận 3</td>
+                    <td>30 triệu/tháng</td>
+                    <td><a href="contact.html" class="btn btn-primary">Liên hệ</a></td>
+                </tr>
+                <tr data-price="12">
+                    <td>4</td>
+                    <td>Chung cư mini Quận 5</td>
+                    <td>122 Đường A, Quận 5</td>
+                    <td>12 triệu/tháng</td>
+                    <td><a href="contact.html" class="btn btn-primary">Liên hệ</a></td>
+                </tr>
+                <tr data-price="25">
+                    <td>5</td>
+                    <td>Văn phòng cao cấp Quận 1</td>
+                    <td>456 Đường c, Quận 1</td>
+                    <td>25 triệu/tháng</td>
+                    <td><a href="contact.html" class="btn btn-primary">Liên hệ</a></td>
+                </tr>
+                <tr data-price="18">
+                    <td>6</td>
+                    <td>Nhà mặt tiền Quận 10</td>
+                    <td>798 Đường C, Quận 10</td>
+                    <td>18 triệu/tháng</td>
+                    <td><a href="contact.html" class="btn btn-primary">Liên hệ</a></td>
+                </tr>
+                <tr data-price="28">
+                    <td>7</td>
+                    <td>Văn phòng tiện ích Quận 2</td>
+                    <td>123 Đường A, Quận 1</td>
+                    <td>28 triệu/tháng</td>
+                    <td><a href="contact.html" class="btn btn-primary">Liên hệ</a></td>
+                </tr>
+                <tr data-price="14">
+                    <td>8</td>
+                    <td>Căn hộ gia đình Quận 4</td>
+                    <td>456 Đường B, Quận 7</td>
+                    <td>14 triệu/tháng</td>
+                    <td><a href="contact.html" class="btn btn-primary">Liên hệ</a></td>
+                </tr>
+                <tr data-price="22">
+                    <td>9</td>
+                    <td>Văn phòng startup Quận Bình Thạnh</td>
+                    <td>789 Đường C, Quận Bình Thạnh</td>
+                    <td>22 triệu/tháng</td>
+                    <td><a href="contact.html" class="btn btn-primary">Liên hệ</a></td>
+                </tr>
+                <tr data-price="16">
+                    <td>10</td>
+                    <td>Nhà phố liền kề Quận 11</td>
+                    <td>122 Đường A, Quận 11</td>
+                    <td>16 triệu/tháng</td>
+                    <td><a href="contact.html" class="btn btn-primary">Liên hệ</a></td>
+                </tr>
+                <tr data-price="16">
+                    <td>11</td>
+                    <td>Nhà phố liền kề Quận 8</td>
+                    <td>789 Đường C, Quận 8</td>
+                    <td>16 triệu/tháng</td>
+                    <td><a href="contact.html" class="btn btn-primary">Liên hệ</a></td>
+                </tr>
+                <tr data-price="11">
+                    <td>13</td>
+                    <td>Nhà phố liền kề Quận 4</td>
+                    <td>122 Đường A, Quận 4</td>
+                    <td>11 triệu/tháng</td>
+                    <td><a href="contact.html" class="btn btn-primary">Liên hệ</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <footer class="bg-dark text-white text-center p-3 mt-4">
+        &copy; 2025 Tra cứu nhà ở và văn phòng. All Rights Reserved.
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById("searchBox").addEventListener("input", function() {
+            let searchValue = this.value.toLowerCase();
+            let rows = document.querySelectorAll("#propertyList tr");
+            rows.forEach(row => {
+                let name = row.children[1].textContent.toLowerCase();
+                row.style.display = name.includes(searchValue) ? "" : "none";
+            });
+        });
+
+        document.getElementById("filterPrice").addEventListener("change", function() {
+            let filterValue = this.value;
+            let rows = document.querySelectorAll("#propertyList tr");
+            rows.forEach(row => {
+                let price = parseInt(row.getAttribute("data-price"));
+                if (filterValue === "") {
+                    row.style.display = "";
+                } else if (filterValue === "10" && price <= 10) {
+                    row.style.display = "";
+                } else if (filterValue === "20" && price > 10 && price <= 20) {
+                    row.style.display = "";
+                } else if (filterValue === "30" && price > 20) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

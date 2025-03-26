@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tra cứu nhà ở và văn phòng cho thuê</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+        }
+        .navbar {
+            background-color: #0d6efd !important;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand, .nav-link {
+            color: white !important;
+            font-weight: 500;
+        }
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+        .property-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            background: white;
+            transition: all 0.3s ease-in-out;
+        }
+        .property-card:hover {
+            transform: translateY(-5px);
+        }
+        .property-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+        .btn-primary {
+            background-color: #0d6efd;
+            border: none;
+            font-weight: 500;
+            border-radius: 6px;
+        }
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+        }
+        footer {
+            background: #222;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Tra cứu nhà ở & Văn phòng</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="list.html">Danh sách</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Liên hệ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Đăng Nhập</a></li>
+                    <li class="nav-item"><a class="nav-link" href="register.html">Đâng ký</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">Danh sách nhà ở và văn phòng cho thuê</h2>
+        
+        <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="detailModalLabel">Chi tiết bất động sản</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img id="detailImage" src="" class="img-fluid mb-3" alt="Hình ảnh bất động sản">
+                        <h4 id="detailName"></h4>
+                        <p id="detailPrice"></p>
+                        <p id="detailDescription">Thông tin chi tiết sẽ hiển thị ở đây.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <input type="text" id="searchBox" class="form-control" placeholder="Tìm kiếm theo tên...">
+            </div>
+            <div class="col-md-4">
+                <select id="filterType" class="form-control">
+                    <option value="">Lọc theo loại</option>
+                    <option value="house">Nhà ở</option>
+                    <option value="office">Văn phòng</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select id="filterPrice" class="form-control">
+                    <option value="">Lọc theo giá</option>
+                    <option value="10">Dưới 10 triệu</option>
+                    <option value="20">10 - 20 triệu</option>
+                    <option value="30">Trên 20 triệu</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="row" id="propertyList">
+            <script>
+                const properties = [
+                    {type: 'house', price: 15, name: 'Căn hộ cao cấp Quận 1', img: 'https://static1.cafeland.vn/cafelandnew/hinh-anh/2022/05/25/186/image-20220525110518-1.jpeg?t=1'},
+                    {type: 'house', price: 20, name: 'Nhà phố nguyên căn Quận 7', img: 'https://file4.batdongsan.com.vn/resize/1275x717/2022/12/02/20221202151614-ee14_wm.jpg'},
+                    {type: 'office', price: 30, name: 'Văn phòng hạng A Quận 3', img: 'https://file4.batdongsan.com.vn/resize/1275x717/2024/10/05/20241005112058-fba4_wm.jpg'},
+                    {type: 'house', price: 12, name: 'Chung cư mini Quận 5', img: 'https://alonhaxinh.vn/upload/images/Chung-cu-mini-khac-gi-chung-cu-thuong(1).jpg'},
+                    {type: 'office', price: 25, name: 'Văn phòng cao cấp Quận 1', img: 'https://niceoffice.b-cdn.net/wp-content/uploads/2024/04/phong-hop-tai-tec-the-nexus-duoc-trang-bi-day-du-cac-thiet-bi-768x576.jpg?v=1713170530'},
+                    {type: 'house', price: 18, name: 'Nhà mặt tiền Quận 10', img: 'https://kinhdoanhdiaoc.net/wp-content/uploads/2022/07/ban-nha-duong-ho-ban-kien-quan-10-shr-chinh-chu.jpg'},
+                    {type: 'office', price: 28, name: 'Văn phòng tiện ích Quận 2', img: 'https://saigonoffice.com.vn/datafiles/setone/16608407849134_287b9b2713bbd1e588aa.jpg'},
+                    {type: 'house', price: 14, name: 'Căn hộ gia đình Quận 4', img: 'https://tch123.cdn.static123.com/images/thumbs/900x600/fit/2025/03/25/z6440965075223-1dc866b32bde13bf05c466f64ee84039_1742897535.jpg'},
+                    {type: 'office', price: 22, name: 'Văn phòng startup Quận Bình Thạnh', img: 'https://cfw51.rabbitloader.xyz/eyJjIjp0cnVlLCJoIjoid3d3LmVzbWFydC52biIsInYiOjM1MDUxNjg0NDYsInIiOjEsImkiOiJlODRmMTU3ZC1hYjRlLTQ2MjgtMjg3Mi1hOGQzNDc3MTkyMDAifQ/storage/2024/04/mo-hinh-van-phong-chia-se-doi-moi-3-min-1.png'},
+                    {type: 'house', price: 16, name: 'Nhà phố liền kề Quận 11', img: 'https://s1.odt.vn/uploads/11-2020/48/galleries/khu-nha-pho-lien-ke-1-tret-3-lau-duong-ha-huy-giap-phuong-thanh-loc-quan-12-chi-47-ty-can-16064821510.jpg'},
+                    {type: 'house', price: 16, name: 'Nhà phố liền kề Quận 8', img: 'https://s1.odt.vn/uploads/11-2020/48/galleries/khu-nha-pho-lien-ke-1-tret-3-lau-duong-ha-huy-giap-phuong-thanh-loc-quan-12-chi-47-ty-can-16064821510.jpg'},
+                    {type: 'house', price: 11, name: 'Nhà phố liền kề Quận 4', img: 'https://thhome.vn/wp-content/uploads/2021/09/nha-pho-lien-ke-02.jpg'},
+                    
+                ];
+                
+                let content = '';
+properties.forEach((prop, index) => {
+    content += `
+        <div class="col-md-4 property-item" data-type="${prop.type}" data-price="${prop.price}">
+            <div class="property-card">
+                <img src="${prop.img}" alt="${prop.name}" class="property-img">
+                <div class="p-3">
+                    <h5>${prop.name}</h5>
+                    <p>Giá: ${prop.price} triệu/tháng</p>
+                    <button class="btn btn-primary w-100" onclick="showDetails(${index})" data-bs-toggle="modal" data-bs-target="#detailModal">Chi tiết</button>
+                </div>
+            </div>
+        </div>`;
+});
+document.getElementById('propertyList').innerHTML = content;
+
+function showDetails(index) {
+    const prop = properties[index];
+    document.getElementById("detailImage").src = prop.img;
+    document.getElementById("detailName").textContent = prop.name;
+    document.getElementById("detailPrice").textContent = `Giá: ${prop.price} triệu/tháng`;
+}
+
+            </script>
+        </div>
+    </div>
+    
+    <footer>
+        &copy; 2025 Tra cứu nhà ở và văn phòng. All Rights Reserved.    
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
